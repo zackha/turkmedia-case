@@ -75,19 +75,47 @@ const menus = reactive([
 const submenus = reactive([
   { text: 'Foto Galeri', href: '' },
   { text: 'Video Galeri', href: '' },
-  // Add other submenu items here...
+  { text: 'Resmi İlanlar', href: '' },
+  { text: 'Gündem Analiz', href: '' },
+  { text: 'Venüs', href: '' },
+  { text: 'Magazin', href: '' },
+  { text: 'Kadın Haberleri', href: '' },
+  { text: 'Canlı Skor', href: '' },
+  { text: 'Quiz', href: '' },
+  { text: 'Rüya Tabirleri', href: '' },
+  { text: 'Yaşam', href: '' },
+  { text: 'Kobi', href: '' },
+  { text: 'Dünya', href: '' },
+  { text: 'Kültür Sanat', href: '' },
+  { text: 'Eğitim', href: '' },
+  { text: 'Televizyon', href: '' },
+  { text: 'Cumartesi', href: '' },
+  { text: 'Sinema', href: '' },
+  { text: 'Kitap', href: '' },
+  { text: 'Trend', href: '' },
+  { text: 'Tarih', href: '' },
+  { text: 'Bilim Ve Teknoloji', href: '' },
+  { text: 'E-gazete', href: '' },
+  { text: 'Hava Durumu', href: '' },
+  { text: 'Künye', href: '' },
+  { text: 'Güncel', href: '' },
+  { text: 'Sağlık', href: '' },
+  { text: 'Moda', href: '' },
+  { text: 'Mor Papatya', href: '' },
 ]);
 
 const currencies = reactive([
-  { type: 'USD', symbol: '$', value: '37,9857', trend: 'down', icon: 'icon-down-arrow' },
-  { type: 'EUR', symbol: '€', value: '41,8182', trend: 'up', icon: 'icon-up-arrow' },
+  { type: 'USD', symbol: '$', value: '37,9857', trend: false, icon: 'heroicons:arrow-down-circle-16-solid' },
+  { type: 'EUR', symbol: '€', value: '41,8182', trend: true, icon: 'heroicons:arrow-up-circle-16-solid' },
+  { type: 'BIST', symbol: '', value: '3765.81', trend: false, icon: 'heroicons:arrow-down-circle-16-solid' },
 ]);
 
 const socialLinks = reactive([
-  { platform: 'Facebook', href: 'https://www.facebook.com/Aksam/', icon: 'icon-facebook' },
-  { platform: 'Twitter', href: 'https://twitter.com/aksam', icon: 'icon-twitter' },
-  { platform: 'YouTube', href: 'https://www.youtube.com/user/aksamgazetesi/?sub_confirmation=1', icon: 'icon-youtube' },
-  // Add other social links here...
+  { platform: 'Facebook', href: '', icon: 'ri:facebook-fill' },
+  { platform: 'Twitter', href: '', icon: 'ri:twitter-x-fill' },
+  { platform: 'YouTube', href: '', icon: 'ri:youtube-fill' },
+  { platform: 'Linkedin', href: '', icon: 'ri:linkedin-box-fill' },
+  { platform: 'Instagram', href: '', icon: 'ri:instagram-line' },
 ]);
 </script>
 
@@ -116,7 +144,7 @@ const socialLinks = reactive([
           <li class="drop-select cursor-pointer" :class="{ active: isDropdownOpen }">
             <span class="flex middle dropdown-toggle" @click="toggleDropdown">
               <span class="margin-right-sm">MENÜ</span>
-              <i class="icon icon-menu font-size-11"></i>
+              <Icon name="heroicons:bars-3" class="font-size-20" />
             </span>
             <ul class="drop-content font-size-12">
               <li v-for="submenu in submenus" :key="submenu.text">
@@ -126,7 +154,7 @@ const socialLinks = reactive([
           </li>
           <li class="flex middle">
             <div class="drop-select search">
-              <i class="icon cursor-pointer icon-search font-size-17 block"></i>
+              <Icon name="heroicons:magnifying-glass" class="cursor-pointer block font-size-18" />
               <div class="drop-content padding-md">
                 <form class="searchform">
                   <input type="text" placeholder="Arama" />
@@ -162,14 +190,14 @@ const socialLinks = reactive([
               <li v-for="currency in currencies" :key="currency.type" :class="currency.trend" class="flex middle">
                 <span class="currency-icon margin-right-sm">{{ currency.symbol }}</span>
                 <span class="margin-right-sm">{{ currency.value }}</span>
-                <i :class="currency.icon"></i>
+                <Icon :name="currency.icon" class="font-size-16" :style="{ color: currency.trend ? '#31ed31' : '#ff9797' }" />
               </li>
             </ul>
           </div>
           <ul class="other-links flex middle">
             <li v-for="social in socialLinks" :key="social.platform">
-              <a class="flex middle">
-                <i :class="social.icon"></i>
+              <a class="flex middle" :href="social.href">
+                <Icon :name="social.icon" class="font-size-16" />
               </a>
             </li>
           </ul>
