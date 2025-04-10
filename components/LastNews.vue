@@ -1,53 +1,82 @@
 <template>
-  <div class="last-news margin-bottom-md flex middle" id="lastnews">
-    <div class="swiper-container width-full swiper-container-horizontal">
-      <ul class="swiper-wrapper" :style="wrapperStyle">
-        <li v-for="(item, index) in news" :key="index" class="swiper-slide" style="margin-right: 16px">
-          <NuxtLink class="flex center" :to="item.url" target="_blank">
-            <div class="time font-size-12 margin-right-sm">{{ item.time }}</div>
-            <h3 class="title">{{ item.title }}</h3>
-          </NuxtLink>
-        </li>
-      </ul>
-    </div>
-    <div class="navigation flex middle mlm">
-      <i class="icon font-size-18 icon-left-arrow-line cursor-pointer" @click="prevSlide"></i>
-      <i class="icon font-size-18 icon-right-arrow-line cursor-pointer margin-right-sm" @click="nextSlide"></i>
-      <NuxtLink class="f14" to="/son-dakika" alt="Son Dakika Haberleri">Tümü</NuxtLink>
+  <div class="margin-bottom-md">
+    <div class="row">
+      <div class="col-8">
+        <div class="slider-s-1" id="sliders1">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div v-for="(news, index) in mainNews" :key="index" class="swiper-slide">
+                <a :href="news.link" :title="news.title">
+                  <div class="image-wrapper image-330">
+                    <img class="image" :src="news.image" :alt="news.title" />
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <ul class="s-pagination">
+            <li v-for="(news, index) in mainNews" :key="index" :class="{ active: index === activeMainSlide }">
+              <a :href="news.link" :title="news.title">
+                {{ index + 1 }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="slider-s-2" id="sliders2">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div v-for="(ad, index) in secondaryNews" :key="index" class="swiper-slide">
+                <a :href="ad.link" :title="ad.title">
+                  <div class="image-wrapper image-330">
+                    <img class="image lazy" :src="ad.image" :alt="ad.title" />
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <ul class="s-pagination flex">
+            <li v-for="(ad, index) in secondaryNews" :key="index" :class="{ active: index === activeSecondarySlide }">
+              <a :href="ad.link">{{ index + 1 }}</a>
+            </li>
+          </ul>
+          <i class="icon icon-nav font-size-18 icon-left-arrow-line cursor-pointer"></i>
+          <i class="icon icon-nav font-size-18 icon-right-arrow-line cursor-pointer"></i>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  news: Array,
-});
+const mainNews = ref([
+  {
+    title: "Bakan Fidan'dan Özel'e tepki...",
+    link: 'guncel/bakan-fidandan-ozele-tepki-sizin-yaptiginiz-bu-siyaset-degildir/haber-1560507.html',
+    image: 'https://img3.aksam.com.tr/imgsdisk/2025/04/10/bakan-fidandan-ozele-tepk-161.jpg',
+  },
+  {
+    title: 'Ticaret savaşı kızışıyor...',
+    link: 'ekonomi/ticaret-savasi-kizisiyor-trump-cine-karsi-vites-artirdi/haber-1560502.html',
+    image: 'https://img3.aksam.com.tr/imgsdisk/2025/04/09/ticaret-savasi-kizisiyor--325.jpg',
+  },
+]);
 
-const activeIndex = ref(0);
-const slideWidth = 300; // Sabit bir genişlik, orijinal kodda dinamik hesaplanmıyor
+const secondaryNews = ref([
+  {
+    title: 'Her gün 1 fincan kahve içmenin 10 faydası',
+    link: 'mor-papatya/her-gun-1-fincan-kahve-icmenin-10-faydasi/haber-1560480.html',
+    image: 'https://img3.aksam.com.tr/imgsdisk/2025/04/09/her-gun-1-fincan-kahve-ic-925.jpg',
+  },
+  {
+    title: "Mehmet Ali Erbil'in isteği yok artık dedirtti!",
+    link: 'venus/uc-cocuk-bir-torun-sahibi-mehmet-ali-erbilin-istegi-yok-artik-dedirtti/haber-1560479.html',
+    image: 'https://img3.aksam.com.tr/imgsdisk/2025/04/09/uc-cocuk-bir-torun-sahibi-384.jpg',
+  },
+]);
 
-const wrapperStyle = computed(() => {
-  const translateX = -activeIndex.value * (slideWidth + 16); // 16px margin-right için
-  return `transform: translate3d(${translateX}px, 0px, 0px); transition-duration: 300ms;`;
-});
-
-const prevSlide = () => {
-  if (activeIndex.value > 0) activeIndex.value--;
-};
-const nextSlide = () => {
-  if (activeIndex.value < props.news.length - 3) activeIndex.value++; // 3 slayt göründüğünü varsayıyorum
-};
+const activeMainSlide = ref(0);
+const activeSecondarySlide = ref(0);
 </script>
-
-<style scoped>
-.swiper-container {
-  overflow: hidden;
-}
-.swiper-wrapper {
-  display: flex;
-}
-.swiper-slide {
-  flex-shrink: 0;
-  width: 300px; /* Sabit genişlik */
-}
-</style>

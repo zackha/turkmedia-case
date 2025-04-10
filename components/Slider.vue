@@ -1,97 +1,34 @@
 <template>
-  <div :class="`slider-s-${sliderId === 'sliders1' ? 1 : 2}`" :id="sliderId">
-    <div class="swiper-container swiper-container-horizontal">
-      <div class="swiper-wrapper" :style="wrapperStyle">
-        <div
-          v-for="(slide, index) in slides"
-          :key="index"
-          :class="[
-            'swiper-slide',
-            { 'swiper-slide-prev': index === activeIndex - 1 },
-            { 'swiper-slide-active': index === activeIndex },
-            { 'swiper-slide-next': index === activeIndex + 1 },
-          ]"
-          :style="{ width: sliderId === 'sliders1' ? '648px' : '318px' }">
-          <NuxtLink :to="slide.url" target="_blank" :title="slide.title">
-            <div :class="`image-wrapper image-${sliderId === 'sliders1' ? '330' : '330'}`">
-              <img class="image" :src="slide.img" :alt="slide.title" />
-            </div>
-          </NuxtLink>
-        </div>
-      </div>
+  <div class="last-news margin-bottom-md flex middle" id="lastnews">
+    <div class="swiper-container width-full">
+      <ul class="swiper-wrapper">
+        <li v-for="(item, index) in newsItems" :key="index" class="swiper-slide">
+          <a class="flex center" :href="item.href">
+            <div class="time font-size-12 margin-right-sm">{{ item.time }}</div>
+            <h3 class="title">{{ item.title }}</h3>
+          </a>
+        </li>
+      </ul>
     </div>
-    <ul class="s-pagination" :class="{ flex: sliderId === 'sliders2' }">
-      <li v-for="(slide, index) in slides" :key="index" :class="{ active: index === activeIndex }">
-        <NuxtLink :to="slide.url" target="_blank" :title="slide.title">
-          {{ index + 1 }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <i v-if="sliderId === 'sliders2'" class="icon icon-nav font-size-18 icon-left-arrow-line cursor-pointer" @click="prevSlide"></i>
-    <i v-if="sliderId === 'sliders2'" class="icon icon-nav font-size-18 icon-right-arrow-line cursor-pointer" @click="nextSlide"></i>
+    <div class="navigation flex middle mlm">
+      <Icon name="heroicons:chevron-left-solid" class="icon cursor-pointer icon-left-arrow-line font-size-18" />
+      <Icon name="heroicons:chevron-right-solid" class="icon cursor-pointer icon-right-arrow-line font-size-18 margin-right-sm" />
+      <a class="f14" href="#">Tümü</a>
+    </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  slides: Array,
-  sliderId: String,
-});
-
-const activeIndex = ref(0); // Aktif slayt indeksi
-const slideWidth = computed(() => (props.sliderId === 'sliders1' ? 648 : 318)); // Slayt genişliği
-
-// Swiper-wrapper'ın transform stilini hesapla
-const wrapperStyle = computed(() => {
-  const translateX = -activeIndex.value * slideWidth.value;
-  return `transform: translate3d(${translateX}px, 0px, 0px); transition-duration: 300ms;`;
-});
-
-// Önceki ve sonraki slayt fonksiyonları
-const prevSlide = () => {
-  if (activeIndex.value > 0) activeIndex.value--;
-};
-const nextSlide = () => {
-  if (activeIndex.value < props.slides.length - 1) activeIndex.value++;
-};
+const newsItems = [
+  { time: '01:45', title: "Çimsa ÇBK Mersin, Avrupa Ligi'nde yarı finalde", href: '#' },
+  { time: '01:43', title: 'Resmi Gazete yayımlandı... Cumhurbaşkanlığı Politika Kurullarına atama kararı', href: '#' },
+  { time: '01:06', title: 'Şampiyon Ziraat Bankkart', href: '#' },
+  { time: '01:04', title: 'Kuru sıkıkan!', href: '#' },
+  { time: '01:03', title: "Osimhen isterse 40'a biter", href: '#' },
+  { time: '01:01', title: 'En kritik maçımız Samsun', href: '#' },
+  { time: '00:44', title: "Jovic'e baba engeli", href: '#' },
+  { time: '00:42', title: 'Şenol Güneş beni hiç dinlemedi', href: '#' },
+  { time: '00:38', title: "Mourinho Fener'de kaldı", href: '#' },
+  { time: '00:37', title: "Ümraniye'de minibüslerden Gazze'ye destek... Kazanç Filistin'e bağışlanacak", href: '#' },
+];
 </script>
-
-<style scoped>
-.swiper-container {
-  overflow: hidden;
-  position: relative;
-}
-.swiper-wrapper {
-  display: flex;
-}
-.swiper-slide {
-  flex-shrink: 0;
-}
-.image-wrapper.image-330 {
-  width: 100%;
-  height: 330px;
-  overflow: hidden;
-}
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.s-pagination {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-}
-.s-pagination li {
-  display: inline-block;
-  margin-right: 5px;
-}
-.s-pagination li.active a {
-  font-weight: bold;
-  color: #000;
-}
-.icon-nav {
-  cursor: pointer;
-  margin-left: 10px;
-}
-</style>
