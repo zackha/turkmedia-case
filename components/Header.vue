@@ -1,8 +1,8 @@
 <script setup>
 const isDropdownOpen = ref(false);
-function toggleDropdown() {
+const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
-}
+};
 
 const logos = reactive([
   {

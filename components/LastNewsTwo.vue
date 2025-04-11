@@ -78,8 +78,8 @@
           <a data-slide-index="4" href="">5</a>
         </li>
       </ul>
-      <i class="icon icon-nav font-size-18 icon-left-arrow-line cursor-pointer"></i>
-      <i class="icon icon-nav font-size-18 icon-right-arrow-line cursor-pointer"></i>
+      <div class="icon icon-nav icon-left-arrow-line cursor-pointer"><Icon name="heroicons:chevron-left" class="font-size-24" /></div>
+      <div class="icon icon-nav icon-right-arrow-line cursor-pointer"><Icon name="heroicons:chevron-right" class="font-size-24" /></div>
     </div>
   </div>
 </template>
