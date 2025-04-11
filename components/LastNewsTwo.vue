@@ -62,20 +62,8 @@
         </div>
       </div>
       <ul class="s-pagination flex">
-        <li>
-          <a data-slide-index="0" href="">1</a>
-        </li>
-        <li>
-          <a data-slide-index="1" href="">2</a>
-        </li>
-        <li>
-          <a data-slide-index="2" href="">3</a>
-        </li>
-        <li>
-          <a data-slide-index="3" href="">4</a>
-        </li>
-        <li class="active">
-          <a data-slide-index="4" href="">5</a>
+        <li v-for="index in 5" :key="index">
+          <a :data-slide-index="index - 1" href="">{{ index }}</a>
         </li>
       </ul>
       <div class="icon icon-nav icon-left-arrow-line cursor-pointer"><Icon name="heroicons:chevron-left" class="font-size-24" /></div>
